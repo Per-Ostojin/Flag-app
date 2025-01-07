@@ -1,0 +1,2 @@
+- [Github repository](https://github.com/Per-Ostojin/Flag-app.git)
+- [Deployat projekt](https://ditt-projekt-här)
