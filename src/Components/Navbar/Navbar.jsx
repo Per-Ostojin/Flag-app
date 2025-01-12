@@ -1,18 +1,11 @@
-import React, { useState } from "react";
-import { AppBar, Toolbar, Typography, Button, Grid, useMediaQuery } from "@mui/material";
+import React from "react";
+import { AppBar, Toolbar, Typography, Button, Grid, Container } from "@mui/material";
 import MoonIcon from "../../assets/moon.svg";
 import MoonBorderedIcon from "../../assets/moon-bordered.svg";
 import LogoLight from "../../assets/techover-logo.png";
 import LogoDark from "../../assets/techover-logo-dark.png";
 
-const Navbar = () => {
-  const [darkMode, setDarkMode] = useState(false);
-  const isMobile = useMediaQuery("(max-width: 768px)");
-
-  const toggleTheme = () => {
-    setDarkMode((prevMode) => !prevMode);
-  };
-
+const Navbar = ({ darkMode, toggleTheme }) => {
   return (
     <AppBar
       position="static"
@@ -22,32 +15,25 @@ const Navbar = () => {
         boxShadow: "0px 2px 5px rgba(0, 0, 0, 0.1)",
       }}
     >
-      <Toolbar>
-        <Grid
-          container
-          alignItems="center"
-          justifyContent="space-between"
-          sx={{ width: "100%" }}
-        >
-          {/* Vänster: The Flag App */}
-          <Grid item>
-            <Typography
-              variant="h6"
-              sx={{
-                fontWeight: "600",
-                fontSize: isMobile ? "1rem" : "1.5rem",
-              }}
-            >
-              The Flag App
-            </Typography>
-          </Grid>
+      <Container maxWidth="lg">
+        <Toolbar disableGutters>
+          <Grid container alignItems="center" justifyContent="space-between">
+            <Grid item>
+              <Typography
+                variant="h6"
+                sx={{
+                  fontWeight: "600",
+                  fontSize: "1.5rem",
+                }}
+              >
+                The Flag App
+              </Typography>
+            </Grid>
 
-          {/* Mitten: Loggan */}
-          {!isMobile && (
             <Grid
               item
               sx={{
-                display: "flex",
+                display: { xs: "none", md: "flex" },
                 justifyContent: "center",
                 alignItems: "center",
                 flexGrow: 1,
@@ -56,39 +42,38 @@ const Navbar = () => {
               <img
                 src={darkMode ? LogoLight : LogoDark}
                 alt="Techover Logo"
-                style={{ height: isMobile ? "28px" : "32px" }}
+                style={{ height: "32px" }}
               />
             </Grid>
-          )}
 
-          {/* Höger: Dark/Light Mode-knapp */}
-          <Grid item>
-            <Button
-              color="inherit"
-              startIcon={
-                <img
-                  src={darkMode ? MoonIcon : MoonBorderedIcon}
-                  alt="Theme Icon"
-                  style={{ width: isMobile ? "18px" : "20px", height: "auto" }}
-                />
-              }
-              onClick={toggleTheme}
-              sx={{
-                fontWeight: "600",
-                textTransform: "none",
-                fontSize: isMobile ? "0.8rem" : "1rem",
-                "&:hover": {
-                  backgroundColor: darkMode
-                    ? "rgba(242, 242, 242, 0.1)"
-                    : "rgba(13, 56, 68, 0.1)",
-                },
-              }}
-            >
-              {darkMode ? "Light Mode" : "Dark Mode"}
-            </Button>
+            <Grid item>
+              <Button
+                color="inherit"
+                startIcon={
+                  <img
+                    src={darkMode ? MoonIcon : MoonBorderedIcon}
+                    alt="Theme Icon"
+                    style={{ width: "20px", height: "20px" }}
+                  />
+                }
+                onClick={toggleTheme}
+                sx={{
+                  fontWeight: "600",
+                  textTransform: "none",
+                  fontSize: "1rem",
+                  "&:hover": {
+                    backgroundColor: darkMode
+                      ? "rgba(242, 242, 242, 0.1)"
+                      : "rgba(13, 56, 68, 0.1)",
+                  },
+                }}
+              >
+                {darkMode ? "Light Mode" : "Dark Mode"}
+              </Button>
+            </Grid>
           </Grid>
-        </Grid>
-      </Toolbar>
+        </Toolbar>
+      </Container>
     </AppBar>
   );
 };
