@@ -3,16 +3,9 @@ import SearchBar from "./Components/Searchbar/Searchbar";
 import DropdownMenu from "./Components/Dropdown-menu/Dropdown-menu";
 import CountryCard from "./Components/CountryCard/CountryCard";
 import { Box } from "@mui/material";
-import { useState } from "react";
 import { exampleData } from "./Components/CountryCard/data";
 
-function App() {
-  const [darkMode, setDarkMode] = useState(false);
-
-  const toggleTheme = () => {
-    setDarkMode((prevMode) => !prevMode);
-  };
-
+function Homepage({ darkMode, toggleTheme }) {
   return (
     <Box
       sx={{
@@ -23,10 +16,7 @@ function App() {
         padding: { xs: "1rem", md: "0" },
       }}
     >
-      {/* Navbar */}
       <Navbar darkMode={darkMode} toggleTheme={toggleTheme} />
-
-      {/* Filters */}
       <Box
         sx={{
           marginTop: { xs: "1rem", md: "2rem" },
@@ -41,20 +31,18 @@ function App() {
         <SearchBar darkMode={darkMode} />
         <DropdownMenu darkMode={darkMode} />
       </Box>
-
-      {/* Country Cards */}
       <Box
         sx={{
           display: "grid",
           gridTemplateColumns: {
-            xs: "1fr", // Enkel kolumnlayout på mobil
-            sm: "1fr 1fr", // Två kolumner på mindre skärmar
-            md: "1fr 1fr 1fr 1fr", // Fyra kolumner på desktop
+            xs: "1fr",
+            sm: "1fr 1fr",
+            md: "1fr 1fr 1fr 1fr",
           },
-          justifyItems: "center", // Centrerar korten horisontellt
-          gap: "1.5rem", // Mellanrum mellan korten
-          margin: "2rem auto", // Centrera gridens innehåll
-          padding: { xs: "0 1rem", md: "0 5rem" }, // Justera padding
+          justifyItems: "center",
+          gap: "1.5rem",
+          margin: "2rem auto",
+          padding: { xs: "0 1rem", md: "0 5rem" },
         }}
       >
         {exampleData.map((country) => (
@@ -73,4 +61,4 @@ function App() {
   );
 }
 
-export default App;
+export default Homepage;
