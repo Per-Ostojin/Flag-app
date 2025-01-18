@@ -1,127 +1,124 @@
 import React, { useState } from "react";
-import { Box, Typography, Menu, MenuItem } from "@mui/material";
+import { Box, Typography, Menu, MenuItem, Grid, useTheme } from "@mui/material";
 import ArrowDownLight from "../../assets/arrow-down-light.svg";
 import ArrowDownDark from "../../assets/arrow-down-dark.svg";
 
-const regions = ["Africa", "Americas", "Asia", "Europe", "Oceania"];
+const regions = ["All", "Africa", "Americas", "Antarctic", "Asia", "Europe", "Oceania"];
 
-const DropdownMenu = ({ darkMode }) => {
+const DropdownMenu = ({ selectedRegion, setSelectedRegion }) => {
   const [anchorEl, setAnchorEl] = useState(null);
-  const [focused, setFocused] = useState(false);
-  const [selectedRegion, setSelectedRegion] = useState("Region");
+  const [focused, setFocused] = useState(false); // För floating label
+  const theme = useTheme();
+  const darkMode = theme.palette.mode === "dark";
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
-    setFocused(true);
+    setFocused(true); // Aktivera floating label
   };
 
   const handleClose = (region) => {
-    if (region) {
-      setSelectedRegion(region);
-    }
     setAnchorEl(null);
-    setFocused(false);
+    if (region) {
+      setSelectedRegion(region === "All" ? "" : region); // Sätt till tom sträng för "All"
+    }
+    setFocused(false); // Deaktivera floating label
   };
 
   return (
-    <Box
+    <Grid
+      container
       sx={{
-        position: "relative",
+        justifyContent: "flex-end",
+        maxWidth: "300px",
+        width: "100%",
+        height: "50px",
         display: "flex",
         alignItems: "center",
-        justifyContent: { xs: "flex-start", md: "flex-end" }, // Placering för mobil och desktop
-        height: "30px",
-        width: { xs: "66%", md: "200px" }, // Mindre bredd på mobil
+        boxSizing: "border-box",
+        position: "relative",
       }}
     >
-      {/* Label */}
       {focused && (
-        <Box
+        <Typography
           sx={{
             position: "absolute",
-            top: "-10px",
+            top: "-8px",
             left: "12px",
-            backgroundColor: darkMode ? "#2b3844" : "#f2f2f2",
+            backgroundColor: theme.palette.background.paper,
             padding: "0 4px",
-            fontSize: "0.8rem",
-            color: darkMode ? "#f2f2f2" : "#2b3844",
+            fontSize: "0.75rem",
+            color: theme.palette.text.primary,
             zIndex: 1,
             transition: "all 0.3s ease",
           }}
         >
-          Filter by Region
-        </Box>
+          Filter by region
+        </Typography>
       )}
-
-      {/* Dropdown Button */}
-      <Box
-        onClick={handleClick}
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          height: "30px",
-          width: "100%", // Full bredd för den yttre behållaren
-          padding: "0.5rem 1rem",
-          borderRadius: "6px",
-          border: "1px solid",
-          borderColor: darkMode ? "transparent" : "#2b3844",
-          backgroundColor: darkMode ? "#2b3844" : "#f2f2f2",
-          color: darkMode ? "#f2f2f2" : "#2b3844",
-          cursor: "pointer",
-          "&:hover": {
-            borderColor: darkMode ? "#f2f2f2" : "#2b3844",
-          },
-        }}
-      >
-        <Typography
+      <Grid item xs={12}>
+        <Box
+          onClick={handleClick}
           sx={{
-            fontWeight: 300,
-            fontSize: "0.9rem",
-            marginRight: "0.5rem",
-            lineHeight: "1",
-            visibility: focused ? "hidden" : "visible",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            height: "100%",
+            padding: "0 1rem",
+            borderRadius: "6px",
+            border: `1px solid ${darkMode ? "transparent" : theme.palette.text.primary}`,
+            backgroundColor: theme.palette.background.paper,
+            color: theme.palette.text.primary,
+            cursor: "pointer",
+            boxSizing: "border-box",
           }}
         >
-          {selectedRegion}
-        </Typography>
-        <img
-          src={darkMode ? ArrowDownLight : ArrowDownDark}
-          alt="Dropdown Icon"
-          style={{
-            width: "16px",
-            height: "16px",
-          }}
-        />
-      </Box>
-
-      {/* Dropdown Menu */}
-      <Menu
-        anchorEl={anchorEl}
-        open={Boolean(anchorEl)}
-        onClose={() => handleClose(null)}
-        sx={{
-          "& .MuiPaper-root": {
-            backgroundColor: darkMode ? "#2b3844" : "#f2f2f2",
-            color: darkMode ? "#f2f2f2" : "#2b3844",
-          },
-        }}
-      >
-        {regions.map((region) => (
-          <MenuItem
-            key={region}
-            onClick={() => handleClose(region)}
+          <Typography
             sx={{
-              "&:hover": {
-                backgroundColor: darkMode ? "#2a3745" : "#e0e0e0",
-              },
+              fontWeight: 300,
+              fontSize: "0.9rem",
+              lineHeight: "50px",
+              marginRight: "0.5rem",
+              visibility: focused ? "hidden" : "visible", // Dölj texten när floating label visas
             }}
           >
-            {region}
-          </MenuItem>
-        ))}
-      </Menu>
-    </Box>
+            {selectedRegion || "Filter by region"}
+          </Typography>
+          <img
+            src={darkMode ? ArrowDownLight : ArrowDownDark}
+            alt="Dropdown Icon"
+            style={{
+              width: "16px",
+              height: "16px",
+            }}
+          />
+        </Box>
+        <Menu
+          anchorEl={anchorEl}
+          open={Boolean(anchorEl)}
+          onClose={() => handleClose(null)}
+          sx={{
+            "& .MuiPaper-root": {
+              backgroundColor: theme.palette.background.default,
+              color: theme.palette.text.primary,
+            },
+          }}
+        >
+          {regions.map((region) => (
+            <MenuItem
+              key={region}
+              onClick={() => handleClose(region)}
+              sx={{
+                "&:hover": {
+                  backgroundColor: darkMode ? "#394a58" : "#e0e0e0",
+                },
+              }}
+            >
+              {region}
+            </MenuItem>
+          ))}
+        </Menu>
+      </Grid>
+    </Grid>
   );
 };
 

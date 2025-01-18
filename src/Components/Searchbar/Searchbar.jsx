@@ -1,32 +1,36 @@
 import React, { useState } from "react";
-import { TextField, Box } from "@mui/material";
+import { TextField, Box, Grid, useTheme } from "@mui/material";
 
-const SearchBar = ({ darkMode }) => {
+const SearchBar = ({ searchQuery, setSearchQuery }) => {
   const [focused, setFocused] = useState(false);
+  const theme = useTheme();
+  const darkMode = theme.palette.mode === "dark";
 
   return (
-    <Box
+    <Grid
+      container
       sx={{
-        position: "relative", // För absolut positionering av label
+        width: "100%",
+        maxWidth: "400px",
+        position: "relative",
+        height: "50px", // Uppdaterad höjd
         display: "flex",
-        justifyContent: { xs: "center", md: "flex-start" },
         alignItems: "center",
-        marginBottom: "1rem",
-        width: "100%", // Anpassar bredden till omgivande layout
+        boxSizing: "border-box", // Säkerställer konsekvent dimensionering
       }}
     >
       {focused && (
         <Box
           sx={{
             position: "absolute",
-            top: "-10px", // Placera i toppen av input
-            left: "12px", // Justera för att matcha padding
-            backgroundColor: darkMode ? "#2b3844" : "#f2f2f2",
+            top: "-10px",
+            left: "12px",
+            backgroundColor: theme.palette.background.paper,
             padding: "0 4px",
             fontSize: "0.75rem",
-            color: darkMode ? "#f2f2f2" : "#2b3844",
-            zIndex: 1, // Placera framför andra element
-            transition: "all 0.3s ease", // Lägg till mjuk animation
+            color: theme.palette.text.primary,
+            zIndex: 1,
+            transition: "all 0.3s ease",
           }}
         >
           Search for a country
@@ -35,33 +39,36 @@ const SearchBar = ({ darkMode }) => {
       <TextField
         variant="outlined"
         placeholder={!focused ? "Search for a country..." : ""}
+        value={searchQuery} // Kopplar värdet till state
+        onChange={(e) => setSearchQuery(e.target.value)} // Uppdaterar sökfrågan
         onFocus={() => setFocused(true)}
         onBlur={() => setFocused(false)}
         sx={{
-          height: "30px",
-          width: { xs: "100%", sm: "300px" }, // Anpassar bredden för responsivitet
-          backgroundColor: darkMode ? "#2b3844" : "#f2f2f2",
+          width: "100%",
+          height: "100%", // Anpassar till containerns höjd
+          backgroundColor: theme.palette.background.paper,
           borderRadius: "6px",
           "& .MuiOutlinedInput-root": {
-            backgroundColor: darkMode ? "#2b3844" : "#f2f2f2",
+            height: "100%", // Säkerställer höjd
+            backgroundColor: theme.palette.background.paper,
             borderRadius: "6px",
             "& fieldset": {
-              borderColor: darkMode ? "transparent" : "#2b3844",
+              borderColor: darkMode ? "transparent" : theme.palette.text.primary,
             },
             "&:hover fieldset": {
-              borderColor: darkMode ? "transparent" : "#2b3844",
+              borderColor: theme.palette.text.primary,
             },
             "&.Mui-focused fieldset": {
-              borderColor: darkMode ? "transparent" : "#2b3844",
+              borderColor: theme.palette.text.primary,
             },
           },
           input: {
-            color: darkMode ? "#f2f2f2" : "#2b3844",
-            padding: "12px 16px",
+            color: theme.palette.text.primary,
+            padding: "12px 16px", // Säkerställer konsistent padding
           },
         }}
       />
-    </Box>
+    </Grid>
   );
 };
 

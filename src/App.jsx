@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Homepage from "./Homepage";
-import CountryPage from "./Components/CountryPage/CountryPage";
+import { ThemeProvider } from "@mui/material/styles";
+import { CssBaseline } from "@mui/material";
+import createCustomTheme from "./theme/theme"; // Uppdaterat tema
+import Homepage from "./Pages/Homepage";
+import CountryPage from "./Pages/CountryPage";
 
 function App() {
   const [darkMode, setDarkMode] = useState(false);
@@ -10,19 +13,24 @@ function App() {
     setDarkMode((prevMode) => !prevMode);
   };
 
+  const theme = createCustomTheme(darkMode ? "dark" : "light");
+
   return (
-    <Router>
-      <Routes>
-        <Route
-          path="/"
-          element={<Homepage darkMode={darkMode} toggleTheme={toggleTheme} />}
-        />
-        <Route
-          path="/country/:countryName"
-          element={<CountryPage darkMode={darkMode} toggleTheme={toggleTheme} />}
-        />
-      </Routes>
-    </Router>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <Router>
+        <Routes>
+          <Route
+            path="/"
+            element={<Homepage toggleTheme={toggleTheme} />}
+          />
+          <Route
+            path="/country/:countryName"
+            element={<CountryPage toggleTheme={toggleTheme} />}
+          />
+        </Routes>
+      </Router>
+    </ThemeProvider>
   );
 }
 

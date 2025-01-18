@@ -1,27 +1,32 @@
 import React from "react";
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, useTheme } from "@mui/material";
 import { Link } from "react-router-dom";
 
-const CountryCard = ({ flag, name, population, region, capital, darkMode }) => {
+const CountryCard = ({ flag, name, population, region, capital }) => {
+  const theme = useTheme();
+  const darkMode = theme.palette.mode === "dark";
+
   return (
     <Box
       component={Link}
       to={`/country/${name}`}
       sx={{
-        width: "300px",
+        display: "block",
+        textDecoration: "none",
         borderRadius: "8px",
         overflow: "hidden",
-        textDecoration: "none",
-        backgroundColor: "transparent",
         transition: "transform 0.3s ease, box-shadow 0.3s ease",
+        backgroundColor: theme.palette.background.paper,
+        border: `2px solid ${darkMode ? theme.palette.secondary.main : "#e0e0e0"}`,
         "&:hover": {
-          transform: "scale(1.05)",
+          transform: "scale(1.05)", // Liten skalförändring
           boxShadow: darkMode
-            ? "0 4px 10px rgba(255, 255, 255, 0.2)"
-            : "0 4px 10px rgba(0, 0, 0, 0.2)",
+            ? "0 8px 15px rgba(255, 255, 255, 0.2)" // Skugga i mörkt läge
+            : "0 8px 15px rgba(0, 0, 0, 0.2)", // Skugga i ljust läge
         },
       }}
     >
+      {/* Flag */}
       <Box
         component="img"
         src={flag}
@@ -30,16 +35,18 @@ const CountryCard = ({ flag, name, population, region, capital, darkMode }) => {
           width: "100%",
           height: "150px",
           objectFit: "cover",
+          borderBottom: `1px solid ${darkMode ? theme.palette.secondary.main : "#e0e0e0"}`,
         }}
       />
 
+      {/* Country Details */}
       <Box sx={{ padding: "1rem" }}>
         <Typography
           variant="h6"
           sx={{
             fontWeight: "600",
             marginBottom: "0.5rem",
-            color: darkMode ? "#f2f2f2" : "#2b3844",
+            color: theme.palette.text.primary,
           }}
         >
           {name}
@@ -48,7 +55,7 @@ const CountryCard = ({ flag, name, population, region, capital, darkMode }) => {
           variant="body2"
           sx={{
             marginBottom: "0.25rem",
-            color: darkMode ? "#f2f2f2" : "#2b3844",
+            color: theme.palette.text.primary,
           }}
         >
           <strong>Population:</strong> {population.toLocaleString()}
@@ -57,7 +64,7 @@ const CountryCard = ({ flag, name, population, region, capital, darkMode }) => {
           variant="body2"
           sx={{
             marginBottom: "0.25rem",
-            color: darkMode ? "#f2f2f2" : "#2b3844",
+            color: theme.palette.text.primary,
           }}
         >
           <strong>Region:</strong> {region}
@@ -65,7 +72,7 @@ const CountryCard = ({ flag, name, population, region, capital, darkMode }) => {
         <Typography
           variant="body2"
           sx={{
-            color: darkMode ? "#f2f2f2" : "#2b3844",
+            color: theme.palette.text.primary,
           }}
         >
           <strong>Capital:</strong> {capital}

@@ -1,0 +1,168 @@
+import React, { useState, useEffect } from "react";
+import { useTheme } from "@mui/material/styles";
+import Navbar from "../Components/Navbar/Navbar";
+import SearchBar from "../Components/Searchbar/Searchbar";
+import DropdownMenu from "../Components/Dropdown-menu/Dropdown-menu";
+import CountryCard from "../Components/CountryCard/CountryCard";
+import { Grid, Box, CircularProgress, Typography } from "@mui/material";
+import { fetchAllCountries } from "../Utils/api"; // Importera API-funktionen
+
+function Homepage({ toggleTheme }) {
+  const theme = useTheme(); // Hämta det aktiva temat
+  const darkMode = theme.palette.mode === "dark"; // Kontrollera om det är mörkt läge
+
+  // State för sökfråga och vald region
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedRegion, setSelectedRegion] = useState("");
+  const [countries, setCountries] = useState([]); // För länder från API:t
+  const [loading, setLoading] = useState(true); // För att hantera laddning
+  const [error, setError] = useState(null); // För att hantera fel
+
+  // Hämta data från API när komponenten laddas
+  useEffect(() => {
+    const getCountries = async () => {
+      try {
+        setLoading(true); // Börja ladda
+        const data = await fetchAllCountries(); // Hämta länder
+        setCountries(data); // Uppdatera state
+        setLoading(false); // Avsluta laddning
+      } catch (err) {
+        console.error("Error fetching countries:", err);
+        setError("Failed to fetch countries. Please try again later.");
+        setLoading(false); // Avsluta laddning
+      }
+    };
+
+    getCountries();
+  }, []);
+
+  // Sortera och filtrera länder baserat på sökfråga och region
+  const filteredCountries = [...countries]
+    .sort((a, b) => a.name.common.localeCompare(b.name.common)) // Sortera i bokstavsordning
+    .filter((country) => {
+      const matchesSearch = country.name.common
+        .toLowerCase()
+        .includes(searchQuery.toLowerCase());
+      const matchesRegion = selectedRegion ? country.region === selectedRegion : true;
+      return matchesSearch && matchesRegion;
+    });
+
+  return (
+    <Box
+      sx={{
+        backgroundColor: darkMode ? "#202c36" : "#f2f2f2",
+        color: darkMode ? "#f2f2f2" : "#2b3844",
+        minHeight: "100vh",
+      }}
+    >
+      {/* Navbar */}
+      <Navbar darkMode={darkMode} toggleTheme={toggleTheme} />
+
+      {/* Main Content */}
+      <Box
+        sx={{
+          maxWidth: "1200px",
+          margin: "2rem auto",
+          padding: "1rem",
+          display: "flex",
+          flexDirection: "column",
+          gap: "3rem",
+        }}
+      >
+        {/* Filters Row */}
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: { xs: "column", sm: "row" },
+            gap: { xs: "1.5rem", sm: "0" },
+            justifyContent: "space-between", // Jämnt fördelade på desktop
+            alignItems: { xs: "flex-start", sm: "center" },
+          }}
+        >
+          {/* Search Bar */}
+          <Box
+            sx={{
+              width: "100%",
+              maxWidth: { xs: "100%", sm: "48%" }, // Anpassa bredd för desktop
+            }}
+          >
+            <SearchBar
+              darkMode={darkMode}
+              searchQuery={searchQuery}
+              setSearchQuery={setSearchQuery}
+            />
+          </Box>
+
+          {/* Dropdown Menu */}
+          <Box
+            sx={{
+              width: "100%",
+              maxWidth: { xs: "100%", sm: "18.5%" }, // Justera bredd för desktop
+              textAlign: "right", // Säkerställ att den linjerar till höger
+            }}
+          >
+            <DropdownMenu
+              darkMode={darkMode}
+              selectedRegion={selectedRegion}
+              setSelectedRegion={setSelectedRegion}
+            />
+          </Box>
+        </Box>
+
+        {/* Loading State */}
+        {loading && (
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              minHeight: "200px",
+            }}
+          >
+            <CircularProgress />
+          </Box>
+        )}
+
+        {/* Error State */}
+        {error && (
+          <Typography
+            sx={{
+              color: darkMode ? "#f8d7da" : "#842029",
+              textAlign: "center",
+              fontWeight: "600",
+            }}
+          >
+            {error}
+          </Typography>
+        )}
+
+        {/* Country Cards */}
+        {!loading && !error && (
+          <Grid
+            container
+            spacing={3}
+            sx={{
+              justifyContent: "center",
+              padding: { xs: "1rem 0", sm: "0" },
+            }}
+          >
+            {filteredCountries.map((country) => (
+              <Grid item xs={12} sm={6} md={4} lg={3} key={country.name.common}>
+                <CountryCard
+                  flag={country.flags.svg}
+                  name={country.name.common}
+                  population={country.population}
+                  region={country.region}
+                  capital={country.capital ? country.capital[0] : "N/A"}
+                  darkMode={darkMode}
+                />
+              </Grid>
+            ))}
+          </Grid>
+        )}
+      </Box>
+    </Box>
+  );
+}
+
+export default Homepage;
