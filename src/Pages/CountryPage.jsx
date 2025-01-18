@@ -10,7 +10,7 @@ import { useTheme } from "@mui/material/styles";
 const CountryPage = ({ toggleTheme }) => {
   const { countryName } = useParams();
   const navigate = useNavigate();
-  const location = useLocation(); // För att läsa state
+  const location = useLocation(); 
   const theme = useTheme();
   const darkMode = theme.palette.mode === "dark";
 
@@ -76,7 +76,6 @@ const CountryPage = ({ toggleTheme }) => {
     );
   }
 
-  // Kontrollera om användaren kom från en border country-knapp
   const showHomeButton = location.state?.fromBorderCountry || false;
 
   return (
@@ -97,7 +96,7 @@ const CountryPage = ({ toggleTheme }) => {
           maxWidth: "1200px",
           margin: "0 auto",
           padding: "1rem",
-          marginTop: "9rem",
+          marginTop: { xs: "0rem", sm: "9rem" },
         }}
       >
         {/* Navigation Buttons */}
@@ -235,7 +234,7 @@ const CountryPage = ({ toggleTheme }) => {
                           key={border}
                           onClick={() =>
                             navigate(`/country/${borderCountry.name.common}`, {
-                              state: { fromBorderCountry: true }, // Skicka med state
+                              state: { fromBorderCountry: true }, 
                             })
                           }
                           sx={{

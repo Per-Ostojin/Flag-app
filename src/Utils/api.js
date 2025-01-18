@@ -9,7 +9,7 @@ const BASE_URL = "https://restcountries.com/v3.1";
 export const fetchAllCountries = async () => {
   try {
     const response = await axios.get(`${BASE_URL}/all`);
-    return response.data; // Returnera data från API:et
+    return response.data; 
   } catch (error) {
     console.error("Kunde inte hämta länder:", error);
     throw error;

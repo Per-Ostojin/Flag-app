@@ -7,21 +7,21 @@ const regions = ["All", "Africa", "Americas", "Antarctic", "Asia", "Europe", "Oc
 
 const DropdownMenu = ({ selectedRegion, setSelectedRegion }) => {
   const [anchorEl, setAnchorEl] = useState(null);
-  const [focused, setFocused] = useState(false); // För floating label
+  const [focused, setFocused] = useState(false); 
   const theme = useTheme();
   const darkMode = theme.palette.mode === "dark";
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
-    setFocused(true); // Aktivera floating label
+    setFocused(true); 
   };
 
   const handleClose = (region) => {
     setAnchorEl(null);
     if (region) {
-      setSelectedRegion(region === "All" ? "" : region); // Sätt till tom sträng för "All"
+      setSelectedRegion(region === "All" ? "" : region); 
     }
-    setFocused(false); // Deaktivera floating label
+    setFocused(false); 
   };
 
   return (
@@ -78,7 +78,7 @@ const DropdownMenu = ({ selectedRegion, setSelectedRegion }) => {
               fontSize: "0.9rem",
               lineHeight: "50px",
               marginRight: "0.5rem",
-              visibility: focused ? "hidden" : "visible", // Dölj texten när floating label visas
+              visibility: focused ? "hidden" : "visible", 
             }}
           >
             {selectedRegion || "Filter by region"}

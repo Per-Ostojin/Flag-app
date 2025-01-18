@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "@mui/material/styles";
 import { CssBaseline } from "@mui/material";
-import createCustomTheme from "./theme/theme"; // Uppdaterat tema
+import createCustomTheme from "./theme/theme";
 import Homepage from "./Pages/Homepage";
 import CountryPage from "./Pages/CountryPage";
 

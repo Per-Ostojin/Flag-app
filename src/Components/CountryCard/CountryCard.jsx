@@ -19,10 +19,10 @@ const CountryCard = ({ flag, name, population, region, capital }) => {
         backgroundColor: theme.palette.background.paper,
         border: `2px solid ${darkMode ? theme.palette.secondary.main : "#e0e0e0"}`,
         "&:hover": {
-          transform: "scale(1.05)", // Liten skalförändring
+          transform: "scale(1.05)", 
           boxShadow: darkMode
-            ? "0 8px 15px rgba(255, 255, 255, 0.2)" // Skugga i mörkt läge
-            : "0 8px 15px rgba(0, 0, 0, 0.2)", // Skugga i ljust läge
+            ? "0 8px 15px rgba(255, 255, 255, 0.2)" 
+            : "0 8px 15px rgba(0, 0, 0, 0.2)", 
         },
       }}
     >

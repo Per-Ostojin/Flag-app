@@ -13,10 +13,10 @@ const SearchBar = ({ searchQuery, setSearchQuery }) => {
         width: "100%",
         maxWidth: "400px",
         position: "relative",
-        height: "50px", // Uppdaterad höjd
+        height: "50px", 
         display: "flex",
         alignItems: "center",
-        boxSizing: "border-box", // Säkerställer konsekvent dimensionering
+        boxSizing: "border-box", 
       }}
     >
       {focused && (
@@ -39,17 +39,17 @@ const SearchBar = ({ searchQuery, setSearchQuery }) => {
       <TextField
         variant="outlined"
         placeholder={!focused ? "Search for a country..." : ""}
-        value={searchQuery} // Kopplar värdet till state
-        onChange={(e) => setSearchQuery(e.target.value)} // Uppdaterar sökfrågan
+        value={searchQuery} 
+        onChange={(e) => setSearchQuery(e.target.value)} 
         onFocus={() => setFocused(true)}
         onBlur={() => setFocused(false)}
         sx={{
           width: "100%",
-          height: "100%", // Anpassar till containerns höjd
+          height: "100%", 
           backgroundColor: theme.palette.background.paper,
           borderRadius: "6px",
           "& .MuiOutlinedInput-root": {
-            height: "100%", // Säkerställer höjd
+            height: "100%", 
             backgroundColor: theme.palette.background.paper,
             borderRadius: "6px",
             "& fieldset": {
@@ -64,7 +64,7 @@ const SearchBar = ({ searchQuery, setSearchQuery }) => {
           },
           input: {
             color: theme.palette.text.primary,
-            padding: "12px 16px", // Säkerställer konsistent padding
+            padding: "12px 16px", 
           },
         }}
       />

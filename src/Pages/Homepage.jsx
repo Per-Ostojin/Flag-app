@@ -5,40 +5,39 @@ import SearchBar from "../Components/Searchbar/Searchbar";
 import DropdownMenu from "../Components/Dropdown-menu/Dropdown-menu";
 import CountryCard from "../Components/CountryCard/CountryCard";
 import { Grid, Box, CircularProgress, Typography } from "@mui/material";
-import { fetchAllCountries } from "../Utils/api"; // Importera API-funktionen
+import { fetchAllCountries } from "../Utils/api"; 
 
 function Homepage({ toggleTheme }) {
-  const theme = useTheme(); // Hämta det aktiva temat
-  const darkMode = theme.palette.mode === "dark"; // Kontrollera om det är mörkt läge
+  const theme = useTheme(); 
+  const darkMode = theme.palette.mode === "dark";
 
-  // State för sökfråga och vald region
+
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedRegion, setSelectedRegion] = useState("");
-  const [countries, setCountries] = useState([]); // För länder från API:t
-  const [loading, setLoading] = useState(true); // För att hantera laddning
-  const [error, setError] = useState(null); // För att hantera fel
+  const [countries, setCountries] = useState([]); 
+  const [loading, setLoading] = useState(true); 
+  const [error, setError] = useState(null); 
 
-  // Hämta data från API när komponenten laddas
   useEffect(() => {
     const getCountries = async () => {
       try {
-        setLoading(true); // Börja ladda
-        const data = await fetchAllCountries(); // Hämta länder
-        setCountries(data); // Uppdatera state
-        setLoading(false); // Avsluta laddning
+        setLoading(true); 
+        const data = await fetchAllCountries(); 
+        setCountries(data); 
+        setLoading(false); 
       } catch (err) {
         console.error("Error fetching countries:", err);
         setError("Failed to fetch countries. Please try again later.");
-        setLoading(false); // Avsluta laddning
+        setLoading(false);
       }
     };
 
     getCountries();
   }, []);
 
-  // Sortera och filtrera länder baserat på sökfråga och region
+ 
   const filteredCountries = [...countries]
-    .sort((a, b) => a.name.common.localeCompare(b.name.common)) // Sortera i bokstavsordning
+    .sort((a, b) => a.name.common.localeCompare(b.name.common)) 
     .filter((country) => {
       const matchesSearch = country.name.common
         .toLowerCase()
@@ -75,7 +74,7 @@ function Homepage({ toggleTheme }) {
             display: "flex",
             flexDirection: { xs: "column", sm: "row" },
             gap: { xs: "1.5rem", sm: "0" },
-            justifyContent: "space-between", // Jämnt fördelade på desktop
+            justifyContent: "space-between", 
             alignItems: { xs: "flex-start", sm: "center" },
           }}
         >
@@ -83,7 +82,7 @@ function Homepage({ toggleTheme }) {
           <Box
             sx={{
               width: "100%",
-              maxWidth: { xs: "100%", sm: "48%" }, // Anpassa bredd för desktop
+              maxWidth: { xs: "100%", sm: "48%" }, 
             }}
           >
             <SearchBar
@@ -97,8 +96,8 @@ function Homepage({ toggleTheme }) {
           <Box
             sx={{
               width: "100%",
-              maxWidth: { xs: "100%", sm: "18.5%" }, // Justera bredd för desktop
-              textAlign: "right", // Säkerställ att den linjerar till höger
+              maxWidth: { xs: "100%", sm: "18.5%" }, 
+              textAlign: "right", 
             }}
           >
             <DropdownMenu
