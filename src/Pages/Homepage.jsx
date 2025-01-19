@@ -5,26 +5,25 @@ import SearchBar from "../Components/Searchbar/Searchbar";
 import DropdownMenu from "../Components/Dropdown-menu/Dropdown-menu";
 import CountryCard from "../Components/CountryCard/CountryCard";
 import { Grid, Box, CircularProgress, Typography } from "@mui/material";
-import { fetchAllCountries } from "../Utils/api"; 
+import { fetchAllCountries } from "../Utils/api";
 
 function Homepage({ toggleTheme }) {
-  const theme = useTheme(); 
+  const theme = useTheme();
   const darkMode = theme.palette.mode === "dark";
-
 
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedRegion, setSelectedRegion] = useState("");
-  const [countries, setCountries] = useState([]); 
-  const [loading, setLoading] = useState(true); 
-  const [error, setError] = useState(null); 
+  const [countries, setCountries] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const getCountries = async () => {
       try {
-        setLoading(true); 
-        const data = await fetchAllCountries(); 
-        setCountries(data); 
-        setLoading(false); 
+        setLoading(true);
+        const data = await fetchAllCountries();
+        setCountries(data);
+        setLoading(false);
       } catch (err) {
         console.error("Error fetching countries:", err);
         setError("Failed to fetch countries. Please try again later.");
@@ -35,14 +34,15 @@ function Homepage({ toggleTheme }) {
     getCountries();
   }, []);
 
- 
   const filteredCountries = [...countries]
-    .sort((a, b) => a.name.common.localeCompare(b.name.common)) 
+    .sort((a, b) => a.name.common.localeCompare(b.name.common))
     .filter((country) => {
       const matchesSearch = country.name.common
         .toLowerCase()
         .includes(searchQuery.toLowerCase());
-      const matchesRegion = selectedRegion ? country.region === selectedRegion : true;
+      const matchesRegion = selectedRegion
+        ? country.region === selectedRegion
+        : true;
       return matchesSearch && matchesRegion;
     });
 
@@ -74,7 +74,7 @@ function Homepage({ toggleTheme }) {
             display: "flex",
             flexDirection: { xs: "column", sm: "row" },
             gap: { xs: "1.5rem", sm: "0" },
-            justifyContent: "space-between", 
+            justifyContent: "space-between",
             alignItems: { xs: "flex-start", sm: "center" },
           }}
         >
@@ -82,7 +82,7 @@ function Homepage({ toggleTheme }) {
           <Box
             sx={{
               width: "100%",
-              maxWidth: { xs: "100%", sm: "48%" }, 
+              maxWidth: { xs: "100%", sm: "48%" },
             }}
           >
             <SearchBar
@@ -96,8 +96,8 @@ function Homepage({ toggleTheme }) {
           <Box
             sx={{
               width: "100%",
-              maxWidth: { xs: "100%", sm: "18.5%" }, 
-              textAlign: "right", 
+              maxWidth: { xs: "100%", sm: "18.5%" },
+              textAlign: "right",
             }}
           >
             <DropdownMenu
@@ -146,7 +146,15 @@ function Homepage({ toggleTheme }) {
             }}
           >
             {filteredCountries.map((country) => (
-              <Grid item xs={12} sm={6} md={4} lg={3} key={country.name.common}>
+              <Grid
+                item
+                xs={12}
+                sm={6}
+                md={4}
+                lg={3}
+                key={country.name.common}
+                sx={{ height: "auto", }}
+              >
                 <CountryCard
                   flag={country.flags.svg}
                   name={country.name.common}

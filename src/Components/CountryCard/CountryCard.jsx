@@ -1,6 +1,7 @@
 import React from "react";
 import { Box, Typography, useTheme } from "@mui/material";
 import { Link } from "react-router-dom";
+import Flag from "../Flag/Flag"; 
 
 const CountryCard = ({ flag, name, population, region, capital }) => {
   const theme = useTheme();
@@ -19,25 +20,15 @@ const CountryCard = ({ flag, name, population, region, capital }) => {
         backgroundColor: theme.palette.background.paper,
         border: `2px solid ${darkMode ? theme.palette.secondary.main : "#e0e0e0"}`,
         "&:hover": {
-          transform: "scale(1.05)", 
+          transform: "scale(1.05)",
           boxShadow: darkMode
-            ? "0 8px 15px rgba(255, 255, 255, 0.2)" 
-            : "0 8px 15px rgba(0, 0, 0, 0.2)", 
+            ? "0 8px 15px rgba(255, 255, 255, 0.2)"
+            : "0 8px 15px rgba(0, 0, 0, 0.2)",
         },
       }}
     >
       {/* Flag */}
-      <Box
-        component="img"
-        src={flag}
-        alt={`Flag of ${name}`}
-        sx={{
-          width: "100%",
-          height: "150px",
-          objectFit: "cover",
-          borderBottom: `1px solid ${darkMode ? theme.palette.secondary.main : "#e0e0e0"}`,
-        }}
-      />
+      <Flag src={flag} alt={`Flag of ${name}`} />
 
       {/* Country Details */}
       <Box sx={{ padding: "1rem" }}>

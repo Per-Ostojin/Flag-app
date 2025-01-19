@@ -6,11 +6,12 @@ import { fetchAllCountries } from "../Utils/api";
 import ArrowLeft from "../assets/arrow-left.svg";
 import ArrowLeftDark from "../assets/arrow-left-dark.svg";
 import { useTheme } from "@mui/material/styles";
+import Flag from "../Components/Flag/Flag"; 
 
 const CountryPage = ({ toggleTheme }) => {
   const { countryName } = useParams();
   const navigate = useNavigate();
-  const location = useLocation(); 
+  const location = useLocation();
   const theme = useTheme();
   const darkMode = theme.palette.mode === "dark";
 
@@ -161,15 +162,9 @@ const CountryPage = ({ toggleTheme }) => {
         <Grid container spacing={4} sx={{ alignItems: "flex-start" }}>
           {/* Flag */}
           <Grid item xs={12} md={5}>
-            <Box
-              component="img"
+            <Flag
               src={country.flags?.svg || country.flags?.png}
               alt={`Flag of ${country.name.common}`}
-              sx={{
-                width: "100%",
-                borderRadius: "8px",
-                boxShadow: "0 4px 10px rgba(0, 0, 0, 0.2)",
-              }}
             />
           </Grid>
 
@@ -234,7 +229,7 @@ const CountryPage = ({ toggleTheme }) => {
                           key={border}
                           onClick={() =>
                             navigate(`/country/${borderCountry.name.common}`, {
-                              state: { fromBorderCountry: true }, 
+                              state: { fromBorderCountry: true },
                             })
                           }
                           sx={{
