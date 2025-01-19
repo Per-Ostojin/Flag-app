@@ -5,7 +5,6 @@ const Flag = ({ src, alt, variant }) => {
   const theme = useTheme();
   const darkMode = theme.palette.mode === "dark";
 
-  // Anpassning av storlek baserat på variant
   const isCountryPage = variant === "countryPage";
 
   return (
@@ -15,9 +14,9 @@ const Flag = ({ src, alt, variant }) => {
       alt={alt}
       sx={{
         width: "100%",
-        height: isCountryPage ? "auto" : "150px", // Anpassad höjd för CountryPage
-        maxHeight: isCountryPage ? "400px" : "150px", // Maxhöjd för CountryPage
-        objectFit: "contain", // Gör att flaggan passar bättre
+        height: isCountryPage ? "auto" : "150px",
+        maxHeight: isCountryPage ? "400px" : "150px", 
+        objectFit: "cover", 
         borderBottom: `1px solid ${darkMode ? theme.palette.secondary.main : "#e0e0e0"}`,
         borderRadius: "8px",
         boxShadow: "0 4px 10px rgba(0, 0, 0, 0.2)", 

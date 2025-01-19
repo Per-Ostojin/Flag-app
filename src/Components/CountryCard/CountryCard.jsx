@@ -38,6 +38,7 @@ const CountryCard = ({ flag, name, population, region, capital }) => {
             fontWeight: "600",
             marginBottom: "0.5rem",
             color: theme.palette.text.primary,
+            fontSize: "1rem",
           }}
         >
           {name}
