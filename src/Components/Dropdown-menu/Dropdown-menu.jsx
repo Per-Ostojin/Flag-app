@@ -3,25 +3,33 @@ import { Box, Typography, Menu, MenuItem, Grid, useTheme } from "@mui/material";
 import ArrowDownLight from "../../assets/arrow-down-light.svg";
 import ArrowDownDark from "../../assets/arrow-down-dark.svg";
 
-const regions = ["All", "Africa", "Americas", "Antarctic", "Asia", "Europe", "Oceania"];
+const regions = [
+  "All",
+  "Africa",
+  "Americas",
+  "Antarctic",
+  "Asia",
+  "Europe",
+  "Oceania",
+];
 
 const DropdownMenu = ({ selectedRegion, setSelectedRegion }) => {
   const [anchorEl, setAnchorEl] = useState(null);
-  const [focused, setFocused] = useState(false); 
+  const [focused, setFocused] = useState(false);
   const theme = useTheme();
   const darkMode = theme.palette.mode === "dark";
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
-    setFocused(true); 
+    setFocused(true);
   };
 
   const handleClose = (region) => {
     setAnchorEl(null);
     if (region) {
-      setSelectedRegion(region === "All" ? "" : region); 
+      setSelectedRegion(region === "All" ? "" : region);
     }
-    setFocused(false); 
+    setFocused(false);
   };
 
   return (
@@ -65,11 +73,20 @@ const DropdownMenu = ({ selectedRegion, setSelectedRegion }) => {
             height: "100%",
             padding: "0 1rem",
             borderRadius: "6px",
-            border: `1px solid ${darkMode ? "transparent" : theme.palette.text.primary}`,
+            border: `1px solid ${
+              darkMode ? "transparent" : theme.palette.text.primary
+            }`,
             backgroundColor: theme.palette.background.paper,
             color: theme.palette.text.primary,
             cursor: "pointer",
             boxSizing: "border-box",
+            transition: "border-color 0.3s ease, box-shadow 0.3s ease",
+            "&:hover": {
+              borderColor: theme.palette.text.primary,
+              boxShadow: darkMode
+                ? "0 0 8px rgba(255, 255, 255, 0.2)"
+                : "0 0 8px rgba(0, 0, 0, 0.1)",
+            },
           }}
         >
           <Typography
@@ -78,7 +95,7 @@ const DropdownMenu = ({ selectedRegion, setSelectedRegion }) => {
               fontSize: "0.9rem",
               lineHeight: "50px",
               marginRight: "0.5rem",
-              visibility: focused ? "hidden" : "visible", 
+              visibility: focused ? "hidden" : "visible",
             }}
           >
             {selectedRegion || "Filter by region"}
