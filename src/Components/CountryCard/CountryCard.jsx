@@ -28,7 +28,7 @@ const CountryCard = ({ flag, name, population, region, capital }) => {
       }}
     >
       {/* Flag */}
-      <Flag src={flag} alt={`Flag of ${name}`} />
+      <Flag src={flag} alt={`Flag of ${name}`} variant={"card"} />
 
       {/* Country Details */}
       <Box sx={{ padding: "1rem" }}>

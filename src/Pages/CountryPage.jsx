@@ -165,6 +165,7 @@ const CountryPage = ({ toggleTheme }) => {
             <Flag
               src={country.flags?.svg || country.flags?.png}
               alt={`Flag of ${country.name.common}`}
+              variant="countryPage" // Lägg till variant
             />
           </Grid>
 
