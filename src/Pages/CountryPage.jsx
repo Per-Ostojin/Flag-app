@@ -119,8 +119,8 @@ const CountryPage = ({ toggleTheme }) => {
               "&:hover": {
                 transform: "scale(1.05)",
                 boxShadow: darkMode
-                  ? "0 4px 10px rgba(255, 255, 255, 0.2)"
-                  : "0 4px 10px rgba(0, 0, 0, 0.2)",
+                  ? "0 4px 10px rgba(0, 0, 0, 0.8)"
+                  : "0 4px 10px rgba(0, 0, 0, 0.3)",
               },
             }}
           >
@@ -148,8 +148,8 @@ const CountryPage = ({ toggleTheme }) => {
                 "&:hover": {
                   transform: "scale(1.05)",
                   boxShadow: darkMode
-                    ? "0 4px 10px rgba(255, 255, 255, 0.2)"
-                    : "0 4px 10px rgba(0, 0, 0, 0.2)",
+                    ? "0 4px 10px rgba(0, 0, 0, 0.8)"
+                    : "0 4px 10px rgba(0, 0, 0, 0.3)",
                 },
               }}
             >
@@ -245,8 +245,8 @@ const CountryPage = ({ toggleTheme }) => {
                             "&:hover": {
                               transform: "scale(1.05)",
                               boxShadow: darkMode
-                                ? "0 4px 10px rgba(255, 255, 255, 0.2)"
-                                : "0 4px 10px rgba(0, 0, 0, 0.2)",
+                                ? "0 4px 10px rgba(0, 0, 0, 0.8)"
+                                : "0 4px 10px rgba(0, 0, 0, 0.3)",
                             },
                           }}
                         >
